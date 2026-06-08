@@ -76,6 +76,12 @@
 body{margin:0;padding:0!important;font-family:'Source Sans Pro',sans-serif;color:#2c3e50;background:#f5f6f8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 main{display:block;margin:0;padding:0}
 
+/* ===== TOP OFFICIAL BAR ===== */
+.pt-topbar{background:linear-gradient(135deg,#0A2A44,#1A5276);color:rgba(255,255,255,.8);font-size:11px;padding:6px 0;text-align:center;letter-spacing:.3px;font-weight:500;position:relative;z-index:1001}
+.pt-topbar span{display:inline-flex;align-items:center;gap:6px}
+.pt-topbar .pt-dot{width:5px;height:5px;border-radius:50%;background:#4FC3F7;display:inline-block;margin:0 8px}
+@media(max-width:600px){.pt-topbar{font-size:9px;padding:4px 8px;line-height:1.4}.pt-topbar .pt-dot{display:none}}
+
 /* ===== HEADER — WHITE ===== */
 .header{position:relative!important;background:#fff!important;border-bottom:none!important;padding:0!important;min-height:72px!important;display:flex!important;align-items:center!important;box-shadow:0 1px 4px rgba(0,0,0,.08)!important}
 .header .container{display:none!important;max-width:1200px;margin:0 auto;padding:0 24px;width:100%}
@@ -98,6 +104,8 @@ main{display:block;margin:0;padding:0}
 
 /* ===== HERO ===== */
 .db-hero{position:relative;width:100%;min-height:80vh;display:flex;align-items:stretch;overflow:hidden;background:#1a1a26}
+@media(max-width:700px){.db-hero h1{font-size:28px!important}.db-hero p{font-size:15px!important}}
+@media(max-width:768px){.pt-seal{display:none!important}}
 .db-hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;will-change:transform;pointer-events:none}
 .db-hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,26,38,.92) 40%,rgba(26,26,38,.5) 70%,rgba(26,26,38,.2) 100%)}
 .db-hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:24px 24px 60px;width:100%;display:flex;align-items:flex-start;justify-content:space-between;gap:48px}
@@ -506,6 +514,15 @@ header.header{display:block!important;width:100%!important;position:sticky!impor
 </head>
 <body>
 
+<!-- TOP OFFICIAL BAR -->
+<div class="pt-topbar">
+  <span>✓ Официальный сайт ПромТанк</span>
+  <span class="pt-dot"></span>
+  <span>Производство резервуаров AISI 304/316 с 2008 года</span>
+  <span class="pt-dot"></span>
+  <span>Доставка по РФ</span>
+</div>
+
 <!-- HEADER -->
 <header class="header">
 <div class="container">
@@ -734,9 +751,13 @@ header.header{display:block!important;width:100%!important;position:sticky!impor
 <div class="db-hero-inner">
 <style>@media(max-width:940px){.db-hero-inner{flex-direction:column!important;gap:24px!important}}@media(max-width:940px){.db-hero-inner>div:last-child{width:100%!important}}</style>
 <div style="flex:1;min-width:0">
-<div class="db-hero-label">Официальный сайт ПромТанк — производство с 2008 года</div>
-<h1>Резервуары из стали AISI 304/316 под вашу Тех. задачу</h1>
-<p>Изготовим ёмкости от 500 до 400 000 литров по вашим чертежам или ТЗ. Лазерная сварка, гидроиспытания, паспорт сосуда под давлением. Собственный цех 5000 м² в Краснодаре. Доставка по РФ.</p>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 12px;background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.2);border-radius:4px;font-size:11px;font-weight:600;color:#2ecc71">✓ Сертификаты ЕАЭС</span>
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 12px;background:rgba(41,128,185,.12);border:1px solid rgba(41,128,185,.2);border-radius:4px;font-size:11px;font-weight:600;color:#4FC3F7">★ Официальный завод</span>
+</div>
+<div class="db-hero-label">ПромТанк — собственное производство в Краснодаре с 2008 года</div>
+<h1 style="font-size:52px">Резервуары из нержавеющей стали AISI 304/316</h1>
+<p style="font-size:18px;max-width:640px">Изготовим ёмкости от 500 до 400 000 литров по вашему техническому заданию. Лазерная сварка, полный цикл контроля, паспорт сосуда под давлением. Доставка по всей России.</p>
 <div class="db-hero-tags">
 <a href="#" onclick="event.preventDefault();document.getElementById('equipment').scrollIntoView({behavior:'smooth'});setTimeout(function(){if(window.sw)sw(2)},400)">🍺 Пивоваренное</a>
 <a href="#" onclick="event.preventDefault();document.getElementById('equipment').scrollIntoView({behavior:'smooth'});setTimeout(function(){if(window.sw)sw(0)},400)">🥛 Молочное</a>
@@ -1051,16 +1072,17 @@ window.hqSubmitForm = function() {
 <img src="weld.jpg" alt="Качество лазерной сварки" style="max-width:100%;max-height:340px;border-radius:10px;display:block;box-shadow:0 6px 24px rgba(0,0,0,.15)" loading="lazy">
 </div>
 <div style="padding:36px 40px;display:flex;flex-direction:column;justify-content:center">
-<div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#2980B9;font-weight:600;margin-bottom:8px">Технологии производства</div>
-<div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:12px;line-height:1.25">Лазерная сварка и полный цикл контроля</div>
+<div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#4FC3F7;font-weight:600;margin-bottom:8px">Почему ПромТанк? 7 причин</div>
+<div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:12px;line-height:1.25">Контроль качества на каждом этапе</div>
 <div class="ql-feat" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
-<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px">🔬</span> Автомат лазерной сварки швов</div>
-<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px">🧪</span> Испытание давлением воды 1.5× рабочего</div>
-<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px">📏</span> Электрополировка Ra≤0,4 мкм</div>
-<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px">🔧</span> Арматура Inoxpa / Alfa Laval</div>
-<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px">📄</span> Паспорт сосуда под давлением</div>
-<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px">✅</span> Сертификаты ЕАЭС, ISO, HACCP</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px;color:#4FC3F7">✓</span> Лазерная сварка без деформации металла</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px;color:#4FC3F7">✓</span> 100% гидроиспытаний перед отгрузкой</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px;color:#4FC3F7">✓</span> Электрополировка Ra≤0,4 мкм</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px;color:#4FC3F7">✓</span> Арматура Inoxpa / Alfa Laval</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px;color:#4FC3F7">✓</span> Паспорт сосуда под давлением Rostechnadzor</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)"><span style="font-size:16px;color:#4FC3F7">✓</span> Сертификаты ЕАЭС, ISO 9001, HACCP</div>
 </div>
+<div style="margin-top:12px;padding:10px 14px;background:rgba(41,128,185,.08);border-left:3px solid #4FC3F7;border-radius:0 6px 6px 0;font-size:12px;color:rgba(255,255,255,.5)">★ ПромТанк внесён в реестр производителей РФ. Реквизиты и ОГРН по запросу.</div>
 </div>
 </div>
 </div>
@@ -1073,13 +1095,13 @@ window.hqSubmitForm = function() {
 <div class="db-weld-frame" style="padding:0;background:linear-gradient(135deg,#1a1a26,#2b2b39);overflow:hidden">
 <div class="bp-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch">
 <div style="padding:40px 44px;display:flex;flex-direction:column;justify-content:center">
-<div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#2980B9;font-weight:600;margin-bottom:8px">Инженерный расчёт</div>
-<div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:10px;line-height:1.2">Спроектируем по вашему ТЗ</div>
-<div style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:16px">Пришлите техническое задание, эскиз или референс — наши инженеры подготовят индивидуальный проект с 3D-моделью и спецификацией. Любые патрубки, опоры, люки, рубашки, CIP-головки. Расчёт толщины стенки, ребер жёсткости и нагрузки.</div>
+<div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#4FC3F7;font-weight:600;margin-bottom:8px">Проектируем и изготавливаем</div>
+<div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:10px;line-height:1.2">Любая сложность — от эскиза до отгрузки</div>
+<div style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:16px">Отправьте техническое задание, чертёж или просто опишите задачу — инженеры ПромТанк разработают конструкторскую документацию, 3D-модель и спецификацию. Рассчитываем толщину стенок, рёбра жёсткости,负荷ку на опоры. Подбираем арматуру, рубашки, CIP-головки под ваш техпроцесс.</div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
-<div class="db-weld-badge" style="font-size:12px">📐 3D-модель в подарок</div>
-<div class="db-weld-badge" style="font-size:12px">⚙️ Инженерный расчёт прочности</div>
-<div class="db-weld-badge" style="font-size:12px">📄 КП за 24 часа</div>
+<div class="db-weld-badge" style="font-size:12px;background:rgba(79,195,247,.12);border-color:rgba(79,195,247,.2);color:#4FC3F7">📐 3D-модель бесплатно</div>
+<div class="db-weld-badge" style="font-size:12px;background:rgba(79,195,247,.12);border-color:rgba(79,195,247,.2);color:#4FC3F7">⚙️ Расчёт прочности и нагрузок</div>
+<div class="db-weld-badge" style="font-size:12px;background:rgba(79,195,247,.12);border-color:rgba(79,195,247,.2);color:#4FC3F7">📄 КП за 24 часа</div>
 </div>
 </div>
 <div style="display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(255,255,255,.03)">
@@ -1097,8 +1119,8 @@ window.hqSubmitForm = function() {
 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3498db,transparent)"></div>
 <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px 40px;position:relative;z-index:1">
 <div style="text-align:center">
-<div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:4px">📩 Отправьте проект на рассмотрение</div>
-<div style="font-size:14px;color:rgba(255,255,255,.7)">Наши технологи готовы оценить вашу задачу прямо сейчас</div>
+<div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:4px">📩 Пришлите ТЗ — получите КП за 24 часа</div>
+<div style="font-size:14px;color:rgba(255,255,255,.7)">Инженеры ПромТанк подготовят расчёт с 3D-моделью и точной ценой</div>
 </div>
 <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 14px 8px 20px">
 <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.3px">promtank@yandex.com</span>
@@ -1135,6 +1157,30 @@ window.hqSubmitForm = function() {
 </div>
 </div>
 <div style="text-align:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.35)">ПромТанк — официальный сайт производителя. ОГРН, ИНН и реквизиты по запросу.</div>
+</div>
+</div>
+</section>
+
+<!-- TRUST BADGES (unique) -->
+<section class="db-row-section scroll-reveal" style="padding:8px 0 32px;background:transparent">
+<div class="db-wrap">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+<div style="background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f0f0f0;display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#E8F5E9,#C8E6C9);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🏭</div>
+<div><div style="font-size:13px;font-weight:700;color:#1a1a26">Завод в Краснодаре</div><div style="font-size:11px;color:#888;margin-top:2px">5 000 м² собственных площадей</div></div>
+</div>
+<div style="background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f0f0f0;display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#E3F2FD,#BBDEFB);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📋</div>
+<div><div style="font-size:13px;font-weight:700;color:#1a1a26">В реестре производителей РФ</div><div style="font-size:11px;color:#888;margin-top:2px">ОГРН, ИНН — по запросу</div></div>
+</div>
+<div style="background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f0f0f0;display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">⭐</div>
+<div><div style="font-size:13px;font-weight:700;color:#1a1a26">400+ проектов по РФ</div><div style="font-size:11px;color:#888;margin-top:2px">От Калининграда до Владивостока</div></div>
+</div>
+<div style="background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f0f0f0;display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#FCE4EC,#F8BBD0);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔒</div>
+<div><div style="font-size:13px;font-weight:700;color:#1a1a26">Конфиденциально</div><div style="font-size:11px;color:#888;margin-top:2px">NDA по запросу, безопасная сделка</div></div>
+</div>
 </div>
 </div>
 </section>
@@ -1722,7 +1768,7 @@ ym(109477134,"init",{webvisor:true,clickmap:true,ecommerce:"dataLayer",accurateT
 </div>
 </div>
 <div style="padding:24px 0;margin-top:36px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
-<div style="font-size:12px;color:rgba(255,255,255,.3)">© ПромТанк · 2008–2026 · Все права защищены</div>
+<div style="font-size:12px;color:rgba(255,255,255,.3)">© ПромТанк · 2008–2026 · Официальный сайт производителя · Все права защищены</div>
 </div>
 </div>
 </footer>
@@ -1863,5 +1909,12 @@ update();
 })();
 
 </script><script src="js/search.js"></script>
+
+<!-- FLOATING OFFICIAL SEAL -->
+<div class="pt-seal" style="position:fixed;bottom:80px;right:16px;z-index:9997;background:rgba(10,42,68,.92);backdrop-filter:blur(8px);border:1px solid rgba(79,195,247,.2);border-radius:10px;padding:8px 12px;box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .3s;max-width:200px" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" onmouseover="this.style.background='rgba(10,42,68,1)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.3)'" onmouseout="this.style.background='rgba(10,42,68,.92)';this.style.boxShadow='0 4px 16px rgba(0,0,0,.2)'">
+<div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2980B9,#1A5276);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+<div style="font-size:10px;color:rgba(255,255,255,.7);line-height:1.3"><span style="font-weight:700;color:#4FC3F7">Официальный сайт</span><br>ПромТанк</div>
+</div>
+
 </body>
 
