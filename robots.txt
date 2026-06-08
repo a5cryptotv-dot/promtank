@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /php/
+
+Sitemap: https://ob-kub.ru/sitemap.xml
+
+# Crawl-delay: 2
