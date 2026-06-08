@@ -124,8 +124,8 @@
     input.parentElement.appendChild(err);
   }
   function sendTelegramLead(data) {
-    var token = '8153500092:AAE2kj4pFcLDqgVL-EQ2TH0eTFW7gDR62YQ';
-    var chatId = '-1002489626904';
+    var token = '8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU';
+    var chatId = '811211256';
     var text = [
       '\u2709\ufe0f <b>Быстрая заявка</b>',
       '\uD83D\uDC64 Имя: ' + data.name,
@@ -295,8 +295,8 @@
       var btn = this;
       btn.disabled = true;
       btn.textContent = 'Отправка...';
-      var token = '8153500092:AAE2kj4pFcLDqgVL-EQ2TH0eTFW7gDR62YQ';
-      var chatId = '-1002489626904';
+      var token = '8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU';
+      var chatId = '811211256';
       var text = [
         '\uD83D\uDCE5 <b>Заявка из каталога</b>',
         '\uD83D\uDC64 Имя: ' + name.value.trim(),

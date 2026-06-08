@@ -872,7 +872,7 @@ window.hqSubmitForm = function() {
   if (hasError) return;
   btn.disabled = true; btn.textContent = 'Отправка...';
   var text = ['\uD83D\uDCE5 <b>Заявка с главной</b>', '\uD83D\uDD27 Оборудование: ' + (equip ? equip.value || '—' : '—'), '\uD83D\uDCCA Объём: ' + (volume ? volume.value || '—' : '—'), '\uD83D\uDC64 Имя: ' + (name ? name.value.trim() || '—' : '—'), '\uD83D\uDCDE Телефон: ' + phone.value.trim(), '\uD83D\uDCC5 ' + new Date().toLocaleString('ru-RU'), '\uD83D\uDD17 ' + window.location.href].join('\n');
-  fetch('https://api.telegram.org/bot8153500092:AAE2kj4pFcLDqgVL-EQ2TH0eTFW7gDR62YQ/sendMessage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: '-1002489626904', text: text, parse_mode: 'HTML' }) }).then(function() {
+  fetch('https://api.telegram.org/bot8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU/sendMessage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: '811211256', text: text, parse_mode: 'HTML' }) }).then(function() {
     btn.textContent = '\u2705 Отправлено!'; st.textContent = 'Спасибо! Мы свяжемся с вами';
     setTimeout(function() { btn.disabled = false; btn.textContent = '\uD83D\uDCE8 Получить расчёт'; st.textContent = 'Нажимая кнопку, вы соглашаетесь с обработкой данных'; }, 4000);
   }).catch(function() {
@@ -1652,10 +1652,10 @@ function toggleAboutEquip(){
       + '\uD83D\uDCC5 ' + new Date().toLocaleString('ru-RU') + '\n'
       + '\uD83D\uDD17 ' + window.location.href;
 
-    fetch('https://api.telegram.org/bot8153500092:AAE2kj4pFcLDqgVL-EQ2TH0eTFW7gDR62YQ/sendMessage', {
+    fetch('https://api.telegram.org/bot8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU/sendMessage', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: '-1002489626904', text: text, parse_mode: 'HTML' })
+      body: JSON.stringify({ chat_id: '811211256', text: text, parse_mode: 'HTML' })
     }).then(function() {
       submitBtn.textContent = '\u2705 Отправлено!';
       setTimeout(function() {
