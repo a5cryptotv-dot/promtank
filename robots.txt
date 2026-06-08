@@ -1,7 +1,7 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 Disallow: /php/
 
-Sitemap: https://ob-kub.ru/sitemap.xml
+Sitemap: https://promtank.ru/sitemap.xml
 
 # Crawl-delay: 2
