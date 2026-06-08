@@ -92,7 +92,7 @@ function initFormSubmissions() {
                         var ft = (f.querySelector('input[name="form_type"]') || {}).value || '';
                         window.trackerSend({ action: 'submit', form: ft, page: location.pathname, sid: (localStorage.getItem('tracker_sid_v2') || '') });
                     }
-                    setTimeout(function() { window.location.href = '/thanks.html'; }, 800);
+                    showFormSuccess(f, '<strong>Спасибо!</strong> Заявка отправлена. Мы свяжемся с вами в ближайшее время.');
                 } else {
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
