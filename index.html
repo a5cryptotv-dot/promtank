@@ -884,6 +884,7 @@ window.hqSubmitForm = function() {
   btn.disabled = true; btn.textContent = 'Отправка...';
   var text = ['\uD83D\uDCE5 <b>Заявка с главной</b>', '\uD83D\uDD27 Оборудование: ' + (equip ? equip.value || '—' : '—'), '\uD83D\uDCCA Объём: ' + (volume ? volume.value || '—' : '—'), '\uD83D\uDC64 Имя: ' + (name ? name.value.trim() || '—' : '—'), '\uD83D\uDCDE Телефон: ' + phone.value.trim(), '\uD83D\uDCC5 ' + new Date().toLocaleString('ru-RU'), '\uD83D\uDD17 ' + window.location.href].join('\n');
   fetch('https://api.telegram.org/bot8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU/sendMessage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: '811211256', text: text, parse_mode: 'HTML' }) }).then(function() {
+    if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
     btn.textContent = '\u2705 Отправлено!'; st.textContent = 'Спасибо! Мы свяжемся с вами';
     setTimeout(function() { btn.disabled = false; btn.textContent = '\uD83D\uDCE8 Получить расчёт'; st.textContent = 'Нажимая кнопку, вы соглашаетесь с обработкой данных'; }, 4000);
   }).catch(function() {
@@ -1668,6 +1669,7 @@ function toggleAboutEquip(){
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: '811211256', text: text, parse_mode: 'HTML' })
     }).then(function() {
+      if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
       submitBtn.textContent = '\u2705 Отправлено!';
       setTimeout(function() {
         submitBtn.disabled = false;

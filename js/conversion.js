@@ -155,6 +155,7 @@
       modalSubmit.disabled = true;
       modalSubmit.textContent = 'Отправка...';
       sendTelegramLead({ name: name, phone: phone, comment: comment }).then(function() {
+        if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
         if (modalBody) modalBody.style.display = 'none';
         if (modalSuccess) modalSuccess.classList.add('active');
       }).catch(function() {

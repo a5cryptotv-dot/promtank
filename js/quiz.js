@@ -320,6 +320,7 @@
         heating: state.heating || '—',
         price: priceText
       }).then(function() {
+        if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
         submitBtn.style.display = 'none';
         quizEl.querySelector('.quiz-steps').style.display = 'none';
         if (successEl) {
