@@ -201,13 +201,13 @@
     });
   });
   var advItems = [
-    { icon: '\uD83C\uDF1F', text: '17 лет', desc: 'на рынке' },
+    { icon: '\uD83C\uDF1F', text: '18 лет', desc: 'на рынке' },
     { icon: '\uD83C\uDFED', text: '5 000 м\u00B2', desc: 'собственное производство' },
-    { icon: '\uD83D\uDD2C', text: 'Лазерная сварка', desc: 'швов AISI 304/316' },
+    { icon: '\uD83D\uDD2C', text: 'Лазерная сварка', desc: 'шов встык' },
     { icon: '\u2699\uFE0F', text: 'Работа по чертежам', desc: 'любая сложность' },
     { icon: '\uD83D\uDCC4', text: 'КП за 24 часа', desc: 'после ТЗ' },
     { icon: '\u2705', text: '12 месяцев', desc: 'гарантии' },
-    { icon: '\uD83D\uDEE1\uFE0F', text: '\u041F\u0430\u0441\u043F\u043E\u0440\u0442\u0430 \u0421\u043E\u0441\u0443\u0434\u043E\u0432 \u043F\u043E\u0434 \u0434\u0430\u0432\u043B\u0435\u043D\u0438\u0435\u043C', desc: '' },
+    { icon: '\uD83D\uDCB0', text: 'Цеховые цены', desc: 'без наценок' },
     { icon: '\uD83D\uDE9A', text: 'Доставка по РФ', desc: 'от Калининграда до Камчатки' }
   ];
   var marqueeHtml = '<div class="adv-marquee-wrap"><div class="adv-marquee-track">';
