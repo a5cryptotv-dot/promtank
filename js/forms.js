@@ -33,6 +33,24 @@ function initFormSubmissions() {
             if (!submitBtn) return;
 
             clearFormErrors(f);
+
+            var honeypot = f.querySelector('input[name="_website"]');
+            if (honeypot && honeypot.value.trim()) return;
+
+            var lsKey = 'pt_form_ts';
+            var last = localStorage.getItem(lsKey);
+            var now = Date.now();
+            if (last && (now - parseInt(last)) < 5000) return;
+            localStorage.setItem(lsKey, String(now));
+
+            var countKey = 'pt_form_count';
+            var count = parseInt(localStorage.getItem(countKey) || '0');
+            var countTs = parseInt(localStorage.getItem(countKey + '_ts') || '0');
+            if (now - countTs > 300000) { count = 0; countTs = now; }
+            if (count >= 5) return;
+            localStorage.setItem(countKey, String(count + 1));
+            localStorage.setItem(countKey + '_ts', String(countTs));
+
             var nameInput = f.querySelector('input[name="name"]');
             var phoneInput = f.querySelector('input[name="phone"]');
             var agreementInput = f.querySelector('input[name="agreement"]');
@@ -77,7 +95,7 @@ function initFormSubmissions() {
             msgLines.push('🔗 ' + window.location.href);
             var text = msgLines.join('\n');
 
-            fetch('https://api.telegram.org/bot8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU/sendMessage', {
+            fetch('https://api.telegram.org/bot8770079921:AAEMVacVtMSou6UJRsQp0DgUwm3v44jPmsM/sendMessage', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: '811211256', text: text, parse_mode: 'HTML' })

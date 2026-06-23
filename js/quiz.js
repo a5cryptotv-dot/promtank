@@ -272,7 +272,7 @@
     input.parentElement.appendChild(errEl);
   }
   function sendTelegramLead(data) {
-    var token = '8770079921:AAEy8OGlTyN4GCnPqJ1DEAosLA6DYpGqVkU';
+    var token = '8770079921:AAEMVacVtMSou6UJRsQp0DgUwm3v44jPmsM';
     var chatId = '811211256';
     var text = [
       '\uD83D\uDCE5 <b>Новая заявка (Квиз)</b>',
@@ -296,6 +296,17 @@
   }
   if (submitBtn) {
     submitBtn.addEventListener('click', function() {
+      var lsKey = 'pt_quiz_ts';
+      var last = localStorage.getItem(lsKey);
+      var now = Date.now();
+      if (last && (now - parseInt(last)) < 5000) return;
+      localStorage.setItem(lsKey, String(now));
+      var count = parseInt(localStorage.getItem('pt_quiz_count') || '0');
+      var countTs = parseInt(localStorage.getItem('pt_quiz_count_ts') || '0');
+      if (now - countTs > 300000) { count = 0; countTs = now; }
+      if (count >= 5) return;
+      localStorage.setItem('pt_quiz_count', String(count + 1));
+      localStorage.setItem('pt_quiz_count_ts', String(countTs));
       clearFieldErrors();
       var hasError = false;
       if (!state.name.trim()) {
