@@ -4,6 +4,7 @@
   if (!quizEl) return;
   var state = {
     volume: 0,
+    volumeLabel: '',
     shape: '',
     industry: '',
     heating: '',
@@ -119,7 +120,7 @@
     }
     var html = '';
     if (state.volume > 0) {
-      html += cpParam(paramLabels.volume, state.volume + ' л');
+      html += cpParam(paramLabels.volume, state.volumeLabel || (state.volume + ' л'));
     }
     if (state.shape) {
       html += cpParam(paramLabels.shape, titleCase(state.shape) + ' (×' + trimMult(est.shapeMult) + ')');
@@ -210,6 +211,10 @@
     opts.forEach(function(el) {
       el.classList.toggle('selected', el.dataset.value === String(value));
     });
+    if (field === 'volume') {
+      var chosen = quizEl.querySelector('.quiz-option[data-field="volume"][data-value="' + value + '"] .quiz-option-label');
+      state.volumeLabel = chosen ? chosen.textContent.trim() : value + ' л';
+    }
     if (field !== 'name' && field !== 'phone' && field !== 'email' && field !== 'company') {
       setTimeout(goNext, 300);
     } else {
@@ -331,7 +336,7 @@
         phone: state.phone,
         email: state.email,
         company: state.company,
-        volume: state.volume > 0 ? state.volume + ' л' : '—',
+        volume: state.volume > 0 ? (state.volumeLabel || state.volume + ' л') : '—',
         shape: shapeText,
         industry: indText,
         heating: heatText,
@@ -345,7 +350,7 @@
         if (successEl) {
           var tagsHtml = '';
           var tagData = [
-            state.volume > 0 ? state.volume + ' л' : '',
+            state.volume > 0 ? (state.volumeLabel || state.volume + ' л') : '',
             state.shape ? titleCase(state.shape) : '',
             state.industry ? titleCase(state.industry) : '',
             state.heating ? (heatingLabels[state.heating] || state.heating) : '',
