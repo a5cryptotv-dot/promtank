@@ -1655,64 +1655,6 @@ function toggleAboutEquip(){
 </div>
 </section>
 
-<script>
-(function() {
-  var form = document.querySelector('form[action*="send.php"]');
-  if (!form) return;
-  var submitBtn = form.querySelector('button[type="submit"]');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var name = form.querySelector('input[name="name"]');
-    var phone = form.querySelector('input[name="phone"]');
-    var email = form.querySelector('input[name="email"]');
-    var equip = document.getElementById('formEquipType');
-    var vol = document.getElementById('formVolCat');
-    var comment = form.querySelector('textarea[name="comment"]');
-
-    [phone].forEach(function(i) { if (i) i.style.borderColor = ''; });
-    var hasError = false;
-    if (!phone.value.trim()) {
-      phone.style.borderColor = '#e74c3c';
-      hasError = true;
-    }
-    if (hasError) return;
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Отправка...';
-
-    var text = '\uD83D\uDCE5 <b>Заявка (нижняя форма)</b>\n'
-      + '\uD83D\uDC64 Имя: ' + (name ? name.value.trim() || '—' : '—') + '\n'
-      + '\uD83D\uDCDE Телефон: ' + (phone ? phone.value.trim() : '—') + '\n'
-      + '\uD83D\uDCE7 Email: ' + (email ? email.value.trim() || '—' : '—') + '\n'
-      + '\uD83D\uDD27 Оборудование: ' + (equip ? equip.value || '—' : '—') + '\n'
-      + '\uD83D\uDCCA Объём: ' + (vol ? vol.value || '—' : '—') + '\n'
-      + '\uD83D\uDCDD Комментарий: ' + (comment ? comment.value.trim() || '—' : '—') + '\n'
-      + '\uD83D\uDCC5 ' + new Date().toLocaleString('ru-RU') + '\n'
-      + '\uD83D\uDD17 ' + window.location.href;
-
-    fetch('https://api.telegram.org/bot8770079921:AAEMVacVtMSou6UJRsQp0DgUwm3v44jPmsM/sendMessage', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: '811211256', text: text, parse_mode: 'HTML' })
-    }).then(function() {
-      if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
-      submitBtn.textContent = '\u2705 Отправлено!';
-      setTimeout(function() {
-        submitBtn.disabled = false;
-        submitBtn.textContent = '\uD83D\uDCE8 Получить расчет \u2192';
-      }, 3000);
-    }).catch(function() {
-      submitBtn.disabled = false;
-      submitBtn.textContent = '\u274C Ошибка';
-      setTimeout(function() {
-        submitBtn.textContent = '\uD83D\uDCE8 Получить расчет \u2192';
-      }, 3000);
-    });
-  });
-})();
-</script>
-
 <!-- LEAD MAGNET: Скачать каталог -->
 
 <!-- CONTACTS -->
