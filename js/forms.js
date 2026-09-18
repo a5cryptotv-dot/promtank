@@ -29,8 +29,7 @@ function initFormSubmissions() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             var f = this;
-            var submitBtn = f.querySelector('.submit-btn');
-            if (!submitBtn) return;
+            var submitBtn = f.querySelector('.submit-btn') || f.querySelector('button[type="submit"]') || f.querySelector('input[type="submit"]');
 
             clearFormErrors(f);
 
@@ -70,9 +69,8 @@ function initFormSubmissions() {
             }
             if (hasError) return;
 
-            var originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка...';
+            var originalText = submitBtn ? submitBtn.textContent : '';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправка...'; }
 
             var name = (f.querySelector('input[name="name"]') || {}).value || '';
             var phone = (f.querySelector('input[name="phone"]') || {}).value || '';
@@ -81,12 +79,16 @@ function initFormSubmissions() {
             var product = (f.querySelector('input[name="product"]') || {}).value || '';
             var formType = (f.querySelector('input[name="form_type"]') || {}).value || '';
             var quantity = (f.querySelector('input[name="quantity"]') || {}).value || '';
+            var equipType = (f.querySelector('#formEquipType') || {}).value || '';
+            var volCat = (f.querySelector('#formVolCat') || {}).value || '';
 
             var msgLines = [];
             msgLines.push('✉️ <b>Заявка с карточки товара</b>');
             if (formType) msgLines.push('🏷 Тип: ' + formType);
             if (product) msgLines.push('📦 Товар: ' + product);
             if (quantity) msgLines.push('№ Количество: ' + quantity);
+            if (equipType) msgLines.push('🏭 Оборудование: ' + equipType);
+            if (volCat) msgLines.push('📊 Объём: ' + volCat);
             if (name) msgLines.push('👤 Имя: ' + name);
             if (phone) msgLines.push('📞 Телефон: ' + phone);
             if (email) msgLines.push('📧 Email: ' + email);
@@ -104,8 +106,7 @@ function initFormSubmissions() {
             .then(function(data) {
                 if (data.ok) {
                     f.reset();
-                    submitBtn.textContent = '✓ Отправлено';
-                    submitBtn.classList.add('sent');
+                    if (submitBtn) { submitBtn.textContent = '✓ Отправлено'; submitBtn.classList.add('sent'); }
                     if (typeof window.trackerSend === 'function') {
                         var ft = (f.querySelector('input[name="form_type"]') || {}).value || '';
                         window.trackerSend({ action: 'submit', form: ft, page: location.pathname, sid: (localStorage.getItem('tracker_sid_v2') || '') });
@@ -113,8 +114,7 @@ function initFormSubmissions() {
                     if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
                     showFormSuccess(f, '<strong>Спасибо!</strong> Заявка отправлена. Мы свяжемся с вами в ближайшее время.');
                 } else {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
                     showFormSuccess(f, '<strong>Ошибка:</strong> Попробуйте позже');
                     var msg = f.querySelector('.form-success-message');
                     if (msg) msg.classList.add('error');
@@ -125,8 +125,7 @@ function initFormSubmissions() {
                 }
             })
             .catch(function() {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
                 showFormSuccess(f, '<strong>Ошибка соединения.</strong> Проверьте подключение и попробуйте снова.');
                 var msg = f.querySelector('.form-success-message');
                 if (msg) msg.classList.add('error');
