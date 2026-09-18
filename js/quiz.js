@@ -52,25 +52,28 @@
     'виноделие': 1.08,
     'промышленное': 1.30
   };
+  var cpNumberValue = null;
+  var cpDateValue = null;
+  function round1000(v) { return Math.round(v / 1000) * 1000; }
+  function fmtMoney(v) { return Math.round(v).toLocaleString('ru-RU'); }
+  function trimMult(v) { return Number(v).toFixed(2).replace(/\.?0+$/, ''); }
+  function titleCase(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
   function calcEstimate() {
     var base = volPrices[state.volume] || 0;
-    if (base === 0) return { price: 0, priceFrom: 0, label: '—', labelFrom: '—' };
-    var s = shapeMultiplier[state.shape] || 1;
-    var ind = indMultiplier[state.industry] || 1;
-    var shapedBase = Math.round(base * s * ind / 1000) * 1000;
-    var hPct = heatPercent[state.heating] || 0;
-    var total = Math.round(shapedBase * (1 + hPct) / 1000) * 1000;
-    var priceFrom = Math.round(base * ind / 1000) * 1000;
-    function formatPrice(val) {
-      if (val >= 1000000) return (val / 1000000).toFixed(1).replace('.0', '') + ' млн';
-      if (val >= 1000) return (val / 1000).toFixed(0) + ' тыс';
-      return String(val);
-    }
+    if (base === 0) return { ok: false, base: 0, from: 0, total: 0, shapeMult: 1, indMult: 1, heatPct: 0 };
+    var shapeMult = shapeMultiplier[state.shape] || 1;
+    var indMult = indMultiplier[state.industry] || 1;
+    var heatPct = heatPercent[state.heating] || 0;
+    var from = round1000(base * indMult);
+    var total = round1000(base * shapeMult * indMult * (1 + heatPct));
     return {
-      price: total,
-      priceFrom: priceFrom,
-      label: formatPrice(total),
-      labelFrom: formatPrice(priceFrom)
+      ok: true,
+      base: base,
+      from: from,
+      total: total,
+      shapeMult: shapeMult,
+      indMult: indMult,
+      heatPct: heatPct
     };
   }
   var paramLabels = {
@@ -91,6 +94,9 @@
     'паровой нагрев': ['Паровой нагрев', 'Клапан предохранительный'],
     'трёхстенная': ['Трёхстенная рубашка', 'Терморегулятор']
   };
+  function cpParam(info, valueHtml) {
+    return '<div class="cp-param"><span class="cp-param-label"><span class="cp-param-ico">' + info.ico + '</span>' + info.label + '</span><span class="cp-param-value">' + valueHtml + '</span></div>';
+  }
   function updateCp() {
     var priceEl = document.getElementById('quizEstPrice');
     var paramsEl = document.getElementById('cpParams');
@@ -98,29 +104,34 @@
     var inclBlock = document.getElementById('cpIncludedBlock');
     var cpNumEl = document.getElementById('cpNumber');
     var cpDateEl = document.getElementById('cpDate');
+    var noteEl = document.getElementById('cpPriceNote');
     if (!priceEl || !paramsEl) return;
-    if (cpNumEl) cpNumEl.textContent = String(1000 + Math.floor(Math.random() * 9000));
-    if (cpDateEl) {
-      var d = new Date();
-      cpDateEl.textContent = d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-    }
+    if (!cpNumberValue) cpNumberValue = String(1000 + Math.floor(Math.random() * 9000));
+    if (!cpDateValue) cpDateValue = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    if (cpNumEl) cpNumEl.textContent = cpNumberValue;
+    if (cpDateEl) cpDateEl.textContent = cpDateValue;
     var est = calcEstimate();
-    var displayLabel = est.labelFrom !== '—' ? 'от ' + est.labelFrom : '—';
-    animatePrice(priceEl, displayLabel);
-    var fields = ['volume', 'shape', 'industry', 'heating'];
+    animatePrice(priceEl, est.ok ? est.total : 0);
+    if (noteEl) {
+      noteEl.textContent = (est.ok && est.total > est.from)
+        ? 'от ' + fmtMoney(est.from) + ' ₽ · точная цена после утверждения ТЗ'
+        : 'Точная цена после утверждения ТЗ';
+    }
     var html = '';
-    fields.forEach(function(f) {
-      var val = state[f];
-      var info = paramLabels[f];
-      if (!info) return;
-      if (f === 'volume' && val > 0) {
-        html += '<div class="cp-param"><span class="cp-param-label"><span class="cp-param-ico">' + info.ico + '</span>' + info.label + '</span><span class="cp-param-value">' + val + ' л</span></div>';
-      } else if (f === 'heating' && val) {
-        html += '<div class="cp-param"><span class="cp-param-label"><span class="cp-param-ico">' + info.ico + '</span>' + info.label + '</span><span class="cp-param-value">' + (heatingLabels[val] || val) + '</span></div>';
-      } else if (val) {
-        html += '<div class="cp-param"><span class="cp-param-label"><span class="cp-param-ico">' + info.ico + '</span>' + info.label + '</span><span class="cp-param-value">' + val.charAt(0).toUpperCase() + val.slice(1) + '</span></div>';
-      }
-    });
+    if (state.volume > 0) {
+      html += cpParam(paramLabels.volume, state.volume + ' л');
+    }
+    if (state.shape) {
+      html += cpParam(paramLabels.shape, titleCase(state.shape) + ' (×' + trimMult(est.shapeMult) + ')');
+    }
+    if (state.industry) {
+      html += cpParam(paramLabels.industry, titleCase(state.industry) + ' (×' + trimMult(est.indMult) + ')');
+    }
+    if (state.heating) {
+      var hTxt = heatingLabels[state.heating] || state.heating;
+      if (est.heatPct) hTxt += ' (+' + Math.round(est.heatPct * 100) + '%)';
+      html += cpParam(paramLabels.heating, hTxt);
+    }
     paramsEl.innerHTML = html;
     var items = [];
     if (state.industry && includedMap[state.industry]) {
@@ -139,28 +150,17 @@
     }
   }
   var priceAnimFrame;
-  function animatePrice(el, target) {
+  function animatePrice(el, targetNum) {
     if (priceAnimFrame) { cancelAnimationFrame(priceAnimFrame); priceAnimFrame = null; }
-    if (target === '—') { el.textContent = '—'; return; }
-    var prefix = '';
-    if (target.indexOf('от ') === 0) { prefix = 'от '; target = target.substring(3); }
-    var suffix = '';
-    if (target.indexOf('млн') !== -1) { suffix = ' млн'; target = target.replace(' млн', ''); }
-    else if (target.indexOf('тыс') !== -1) { suffix = ' тыс'; target = target.replace(' тыс', ''); }
-    var targetNum = parseFloat(target.replace(/,/g, '.'));
-    if (isNaN(targetNum)) { el.textContent = prefix + target + suffix; return; }
-    var startVal = 0;
-    var duration = 600;
+    if (!targetNum) { el.textContent = '—'; return; }
+    var duration = 700;
     var startTime = null;
     function step(ts) {
       if (!startTime) startTime = ts;
       var progress = Math.min((ts - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.round(startVal + (targetNum - startVal) * eased);
-      var txt = prefix;
-      if (suffix === ' млн') txt += current.toFixed(1).replace('.0', '') + ' млн';
-      else txt += current + suffix;
-      el.textContent = txt;
+      var current = Math.round(targetNum * eased);
+      el.textContent = fmtMoney(current);
       if (progress < 1) priceAnimFrame = requestAnimationFrame(step);
     }
     priceAnimFrame = requestAnimationFrame(step);
@@ -284,7 +284,9 @@
       '\uD83D\uDD32 Форма: ' + data.shape,
       '\uD83C\uDFED Отрасль: ' + data.industry,
       '\uD83D\uDD25 Нагрев: ' + data.heating,
-      '\uD83D\uDCB0 Цена: ' + data.price,
+      '\uD83D\uDCB0 Ориентировочно: ' + data.price,
+      '\uD83D\uDD01 Диапазон: ' + (data.range || '—'),
+      '\uD83E\uDDFE КП №: ' + (data.kp || '—'),
       '\uD83D\uDCC5 ' + new Date().toLocaleString('ru-RU'),
       '\uD83D\uDD17 ' + window.location.href
     ].join('\n');
@@ -319,17 +321,23 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Отправка...';
       var est = calcEstimate();
-      var priceText = est.labelFrom !== '—' ? 'от ' + est.labelFrom + ' ₽' : '—';
+      var priceText = est.ok ? fmtMoney(est.total) + ' ₽' : '—';
+      var rangeText = est.ok ? 'от ' + fmtMoney(est.from) + ' ₽' : '—';
+      var shapeText = state.shape ? titleCase(state.shape) + ' (×' + trimMult(est.shapeMult) + ')' : '—';
+      var indText = state.industry ? titleCase(state.industry) + ' (×' + trimMult(est.indMult) + ')' : '—';
+      var heatText = state.heating ? (heatingLabels[state.heating] || state.heating) + (est.heatPct ? ' (+' + Math.round(est.heatPct * 100) + '%)' : '') : '—';
       sendTelegramLead({
         name: state.name,
         phone: state.phone,
         email: state.email,
         company: state.company,
         volume: state.volume > 0 ? state.volume + ' л' : '—',
-        shape: state.shape || '—',
-        industry: state.industry || '—',
-        heating: state.heating || '—',
-        price: priceText
+        shape: shapeText,
+        industry: indText,
+        heating: heatText,
+        price: priceText,
+        range: rangeText,
+        kp: cpNumberValue || '—'
       }).then(function() {
         if (typeof ym === 'function') ym(109737712, 'reachGoal', '567264219');
         submitBtn.style.display = 'none';
@@ -338,9 +346,9 @@
           var tagsHtml = '';
           var tagData = [
             state.volume > 0 ? state.volume + ' л' : '',
-            state.shape,
-            state.industry,
-            state.heating,
+            state.shape ? titleCase(state.shape) : '',
+            state.industry ? titleCase(state.industry) : '',
+            state.heating ? (heatingLabels[state.heating] || state.heating) : '',
             priceText
           ].filter(Boolean);
           tagData.forEach(function(t) {
