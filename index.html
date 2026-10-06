@@ -784,7 +784,7 @@ header.header{display:block!important;width:100%!important;position:sticky!impor
 
 <!-- HERO -->
 <section class="db-hero">
-<video src="IMG_0419.MP4" class="db-hero-bg" autoplay muted loop playsinline preload="metadata" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;pointer-events:none;"></video>
+<img src="fon%20promotank.webp" alt="" class="db-hero-bg" loading="lazy">
 <div class="db-hero-overlay"></div>
 <div class="db-hero-inner">
 <style>@media(max-width:940px){.db-hero-inner{flex-direction:column!important;gap:24px!important}}@media(max-width:940px){.db-hero-inner>div:last-child{width:100%!important}}</style>
@@ -1808,7 +1808,6 @@ setInterval(function(){ render((current + 1) % total); }, 6000);
 (function(){
 var hero = document.querySelector('.db-hero');
 var bg = hero ? hero.querySelector('.db-hero-bg') : null;
-if (bg && bg.tagName === 'VIDEO') bg.playbackRate = 0.5;
 if (!hero || !bg) return;
 var ticking = false;
 function update() {
