@@ -1808,6 +1808,7 @@ setInterval(function(){ render((current + 1) % total); }, 6000);
 (function(){
 var hero = document.querySelector('.db-hero');
 var bg = hero ? hero.querySelector('.db-hero-bg') : null;
+if (bg && bg.tagName === 'VIDEO') bg.playbackRate = 0.5;
 if (!hero || !bg) return;
 var ticking = false;
 function update() {
